@@ -63,6 +63,18 @@ mcpserver.registerResource(
   }
 )
 
+app.post('/mcp',async (req,res)=>{
+  const transport = new StreamableHTTPServerTransport({
+    sessionIdGenerator:undefined,
+    enableJsonResponse:true
+  });
+  res.on('close',()=>{
+    transport.close();
+  });
+  await server.connect(transport);
+  await transport.handleRequest(req,res,req.body);
+})
+
 app.use('/api/users',uRts);
 app.use('/api/carts',cRts);
 app.use('/api/products',pRts);
