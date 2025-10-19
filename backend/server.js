@@ -1,20 +1,67 @@
 require('dotenv').config();
-const McpServer= require('@modelcontextprotocol/sdk/server/mcp.js')
-const StreamableHTTPServerTransport
-               = require('@modelcontextprotocol/sdk/server/streamableHttp.js')
-const Product  = require('./models/productModel');
-const cors     = require('cors');
-const express  = require('express');
-const mongoose = require('mongoose');
-const app      = express();
+const {McpServer, ResourceTemplate} = require('@modelcontextprotocol/sdk/server/mcp.js')
+const {StreamableHTTPServerTransport}
+                 = require('@modelcontextprotocol/sdk/server/streamableHttp.js')
+const Product    = require('./models/productModel');
+const cors       = require('cors');
+const express    = require('express');
+const mongoose   = require('mongoose');
+const app        = express();
 
-const uRts     = require('./routes/users');
-const cRts     = require('./routes/carts');
-const pRts     = require('./routes/products');
+const uRts       = require('./routes/users');
+const cRts       = require('./routes/carts');
+const pRts       = require('./routes/products');
 
 app.use(express.json());
 app.use(cors());
 
+const mcpserver = new McpServer({
+  name : "test",
+  version : "1.0.0"
+});
+
+mcpserver.registerResource(
+  'phones',
+  new ResourceTemplate('phones://{phoneId?}',{list:undefined}),
+  {
+    title:'Phones Database',
+    description : "Fetches phone details from MongoDB Atlas"
+  },
+  async (uri,{phoneId}) => {
+    if (!phoneId){
+      const products_all = await Product.find({}).sort({createdAt:-1});
+      return {
+        contents : [
+          {
+            uri:uri.href,
+            text:JSON.stringify(products_all,null,2)
+          }
+        ]
+      }
+    }
+    else {
+      const product   = await Product.findById(phoneId);
+      if (!product) {
+        return {
+          contents:[
+            {
+              uri:uri.href,
+              text:`No product found for ID ${phoneId}`
+            }
+          ]
+        }
+      }
+      return {
+        contents : [
+          {
+            uri:uri.href,
+            text:JSON.stringify(product,null,2)
+          }
+        ]
+      }
+    }
+  }
+)
 
 app.use('/api/users',uRts);
 app.use('/api/carts',cRts);
