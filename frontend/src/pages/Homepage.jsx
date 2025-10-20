@@ -5,7 +5,10 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import {useProductContext} from '../hooks/useProductContext';
 import ProductCard from "../components/ProductCard";
+
 import Cerebras from '@cerebras/cerebras_cloud_sdk';
+import {Client} from '@modelcontextprotocol/sdk/client/index.js';
+import {StreamableHTTPClientTransport} from '@modelcontextprotocol/sdk/client/streamableHttp.js'
 
 const reviews = [
   "Great quality phones! Saved a lot of money.",
@@ -79,15 +82,25 @@ const sendMessage = async () => {
   setInput("");
 
   try {
-    const chatCompletion = await cerebclient.chat.completions.create({
-      messages:[{role:'user',content:""}],
+    // const chatCompletion = await cerebclient.chat.completions.create({
+    //   messages:[{role:'user',content:""}],
+    //   model:"llama-4-scout-17b-16e-instruct"
+    // })
+
+    // const data = await res.json();
+    const transport  = new StreamableHTTPClientTransport({url:"http://localhost:4000/mcp"});
+    const cclient    = new Client(transport);
+    const userPrompt = input
+    const completion = await cerebclient.chat.completions.create({
+      messages:[
+        {role:'system',content:'You are connected to a MCP server with a resource called "phones" take the list of all phones and answer the question asked.'},
+        {role:"user",content:userPrompt}
+      ],
       model:"llama-4-scout-17b-16e-instruct"
     })
-
-    const data = await res.json();
     const botReply =
-      data?.choices?.[0]?.message?.content || "Sorry, I couldn’t get that.";
-
+      completion?.choices[0]?.message.content || "Sorry, I couldn’t get that.";
+    console.log(botReply)
     setMessages((prev) => [
       ...prev,
       { sender: "bot", text: botReply },
