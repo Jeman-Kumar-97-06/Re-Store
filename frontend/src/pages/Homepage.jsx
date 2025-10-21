@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import {useProductContext} from '../hooks/useProductContext';
 import ProductCard from "../components/ProductCard";
+import Chatbot from "../components/Chatbot";
 
 const reviews = [
   "Great quality phones! Saved a lot of money.",
@@ -119,6 +120,7 @@ export default function HomePage() {
           Buying refurbished phones reduces **electronic waste**, saves **energy**, and minimizes the need for new raw materials. By choosing a refurbished phone, you're making a **sustainable choice** for a better future.
         </p>
       </div>
+      <Chatbot/>
     </div>
   );
 }

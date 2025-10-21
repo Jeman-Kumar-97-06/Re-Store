@@ -1,8 +1,11 @@
 import Cerebras from '@cerebras/cerebras_cloud_sdk';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StreamableHTTPClientTransport} from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { useState } from 'react';
 
-//chat bot logic : 
+
+export default function Chatbot() {
+  //chat bot logic : 
 const [showChat, setShowChat] = useState(false);
 const [messages, setMessages] = useState([]);
 const [input, setInput] = useState("");
@@ -43,7 +46,6 @@ const sendMessage = async () => {
     ]);
   }
 };
-export default function Chatbot() {
   return (
     <div>
       {/* Chatbot button */}
