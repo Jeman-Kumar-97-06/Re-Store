@@ -18,12 +18,6 @@ const sendMessage = async () => {
   setInput("");
 
   try {
-    // const chatCompletion = await cerebclient.chat.completions.create({
-    //   messages:[{role:'user',content:""}],
-    //   model:"llama-4-scout-17b-16e-instruct"
-    // })
-
-    // const data = await res.json();
     const transport  = new StreamableHTTPClientTransport({url:"http://localhost:4000/mcp"});
     const cclient    = new Client(transport);
     const userPrompt = input
@@ -49,60 +43,61 @@ const sendMessage = async () => {
     ]);
   }
 };
-
-return (
+export default function Chatbot() {
+  return (
     <div>
-          {/* Chatbot button */}
+      {/* Chatbot button */}
       {/* Chatbot Button + Chat Window */}
-<div className="fixed bottom-6 right-6 z-50">
-  {/* Floating Button */}
-  <button
-    onClick={() => setShowChat((prev) => !prev)}
-    className="bg-blue-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700 transition"
-  >
-    💬
-  </button>
+      <div className="fixed bottom-6 right-6 z-50">
+      {/* Floating Button */}
+      <button
+        onClick={() => setShowChat((prev) => !prev)}
+        className="bg-blue-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700 transition"
+      >
+        💬
+      </button>
 
-  {/* Chat Window */}
-  {showChat && (
-    <div className="absolute bottom-20 right-0 w-80 bg-white shadow-xl rounded-xl border border-gray-200 overflow-hidden">
-      <div className="bg-blue-600 text-white px-4 py-2 font-semibold">
-        How can i help u ?
-      </div>
-      <div className="p-3 h-64 overflow-y-auto text-sm space-y-2">
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`p-2 rounded-lg ${
-              m.sender === "user"
-                ? "bg-blue-100 text-right"
-                : "bg-gray-100 text-left"
-            }`}
-          >
-            {m.text}
+      {/* Chat Window */}
+      {showChat && (
+        <div className="absolute bottom-20 right-0 w-80 bg-white shadow-xl rounded-xl border border-gray-200 overflow-hidden">
+          <div className="bg-blue-600 text-white px-4 py-2 font-semibold">
+            How can i help u ?
           </div>
-        ))}
-      </div>
+          <div className="p-3 h-64 overflow-y-auto text-sm space-y-2">
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={`p-2 rounded-lg ${
+                m.sender === "user"
+                  ? "bg-blue-100 text-right"
+                  : "bg-gray-100 text-left"
+                }`}
+              >
+              {m.text}
+              </div>
+            ))}
+          </div>
 
-      {/* Input */}
-      <div className="flex border-t">
-        <input
-          type="text"
-          placeholder="Ask me anything..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          className="flex-1 px-3 py-2 outline-none"
-        />
-        <button
-          onClick={sendMessage}
-          className="bg-blue-600 text-white px-4 hover:bg-blue-700 transition"
-        >
-          Send
-        </button>
+          {/* Input */}
+          <div className="flex border-t">
+            <input
+              type="text"
+              placeholder="Ask me anything..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              className="flex-1 px-3 py-2 outline-none"
+            />
+            <button
+              onClick={sendMessage}
+              className="bg-blue-600 text-white px-4 hover:bg-blue-700 transition"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
       </div>
     </div>
-  )}
-</div>
-    </div>
-)
+  )
+}
