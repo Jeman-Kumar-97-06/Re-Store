@@ -13,7 +13,7 @@ export const themeReducer = (state,action) => {
     }
 };
 
-export const ProductContextProvider = ({children}) => {
+export const ThemeContextProvider = ({children}) => {
     const [state,dispatch] = useReducer(themeReducer,{theme:'light'});
     useEffect(()=>{
         const theme_ex = JSON.parse(localStorage.getItem('ref_theme'));

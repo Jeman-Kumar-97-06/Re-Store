@@ -1,8 +1,10 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Sun, Moon } from "lucide-react";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useThemeContext } from "../hooks/useThemeContext";
+
 const api = "926e21302b1f43dda1db35f1c5f3712e";
 const Navbar = () => {   
     const {user}   = useAuthContext();
@@ -41,6 +43,13 @@ const Navbar = () => {
       }   
     }
 
+    //Code related to theme : 
+    const {theme:deftheme,dispatch:tdispatch} = useThemeContext();
+    const [theme,setTheme] = useState(deftheme);
+
+    const toggleTheme = () =>
+    setTheme(theme === "dark" ? "light" : "dark");
+
     return (
     <nav className="bg-blue-500 text-white shadow-md py-4 px-6 flex justify-between items-center">
         <h1 className="text-white font-bold text-xl pRPhones">RefurbStore</h1>
@@ -48,6 +57,14 @@ const Navbar = () => {
           <Link to='/' className="text-white font-medium">{user._doc.name}</Link>
           <Link to='/cart'><ShoppingCart className="mr-2" size={18} /></Link>
           <button onClick={handleGeoLocation} className='text-white font-medium'>📍{pin_c}</button>
+          
+          {/* Dark/Light Theme Button */}
+          <button
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          
           <button onClick={handleLogout} className="font-bold px-4 py-2 bg-red-600 text-white rounded-md shadow hover:bg-red-700">
             Logout
           </button>

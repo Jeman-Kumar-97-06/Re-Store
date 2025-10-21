@@ -6,6 +6,7 @@ import {AuthContextProvider} from './contexts/AuthContext';
 import {ProductContextProvider} from './contexts/ProductContext';
 import {CartContextProvider} from './contexts/CartContext';
 import {GoogleOAuthProvider} from '@react-oauth/google';
+import { ThemeContextProvider } from './contexts/ThemeContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
     <AuthContextProvider>
       <ProductContextProvider>
         <CartContextProvider>
-          <App />
+          <ThemeContextProvider>
+            <App />
+          </ThemeContextProvider>
         </CartContextProvider>
       </ProductContextProvider>
     </AuthContextProvider>

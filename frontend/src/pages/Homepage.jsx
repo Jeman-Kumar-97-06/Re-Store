@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { ShoppingCart, Search } from "lucide-react";
+import { Search} from "lucide-react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import {useProductContext} from '../hooks/useProductContext';
 import ProductCard from "../components/ProductCard";
 import Chatbot from "../components/Chatbot";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 const reviews = [
   "Great quality phones! Saved a lot of money.",
