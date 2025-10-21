@@ -21,6 +21,7 @@ function App() {
           <Route exact path='/contact' element={user ? <ContactUs/> : <Navigate to='/login'/>}/>
           <Route exact path='/phone/:id' element={user ? <ProductDetail/> : <Navigate to='/login'/>}/>
           <Route exact path='/cart' element={user? <CartPage/> : <Navigate to='/login'/>}/>
+          {/* <Route exact path='/address' element={}/> */}
         </Routes>
       </BrowserRouter>
     </>
