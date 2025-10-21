@@ -6,46 +6,38 @@ import { useState } from 'react';
 
 export default function Chatbot() {
   //chat bot logic : 
-const [showChat, setShowChat] = useState(false);
-const [messages, setMessages] = useState([]);
-const [input, setInput] = useState("");
+  const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
 
-const cerebclient = new Cerebras({
-  apiKey:"csk-486fnf2r8tj5dhy3ryw29h4xhpc84rp6jx5f3mj5f3y8vwnc"
-})
+  const cerebclient = new Cerebras({
+    apiKey:"csk-486fnf2r8tj5dhy3ryw29h4xhpc84rp6jx5f3mj5f3y8vwnc"
+  })
 
-const sendMessage = async () => {
-  if (!input.trim()) return;
-  const userMsg = { sender: "user", text: input };
-  setMessages((prev) => [...prev, userMsg]);
-  setInput("");
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    const userMsg = { sender: "user", text: input };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
 
-  try {
-    const transport  = new StreamableHTTPClientTransport({url:"http://localhost:4000/mcp"});
-    const cclient    = new Client(transport);
-    const userPrompt = input
-    const completion = await cerebclient.chat.completions.create({
-      messages:[
-        {role:'system',content:'You are connected to a MCP server with a resource called "phones" take the list of all phones and answer the question asked.'},
-        {role:"user",content:userPrompt}
-      ],
-      model:"llama-4-scout-17b-16e-instruct"
-    })
-    const botReply =
-      completion?.choices[0]?.message.content || "Sorry, I couldn’t get that.";
-    console.log(botReply)
-    setMessages((prev) => [
-      ...prev,
-      { sender: "bot", text: botReply },
-    ]);
-  } catch (err) {
-    console.error(err);
-    setMessages((prev) => [
-      ...prev,
-      { sender: "bot", text: "Error reaching Cerebras API." },
-    ]);
-  }
-};
+    try {
+      const transport  = new StreamableHTTPClientTransport({url:"http://localhost:4000/mcp"});
+      const cclient    = new Client(transport);
+      const userPrompt = input
+      const completion = await cerebclient.chat.completions.create({
+        messages:[
+          {role:'system',content:'You are connected to a MCP server with a resource called "phones" take the list of all phones and answer the question asked.'},
+          {role:"user",content:userPrompt}
+        ],
+        model:"llama-4-scout-17b-16e-instruct"
+      })
+      const botReply = completion?.choices[0]?.message.content || "Sorry, I couldn’t get that.";
+      setMessages((prev) => [...prev,{ sender: "bot", text: botReply },]);
+    } catch (err) {
+        console.error(err);
+        setMessages((prev) => [...prev,{ sender: "bot", text: "Error reaching Cerebras API." },]);
+    }
+  };
   return (
     <div>
       {/* Chatbot button */}
