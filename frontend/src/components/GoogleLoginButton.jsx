@@ -13,6 +13,7 @@ export const GoogleLoginButton = () => {
       const data = await res.json();
       localStorage.setItem('ref_user',JSON.stringify(data));
       dispatch({type:"LOGIN",payload:data});
+      console.log(data)
       // redirect or update UI
     } catch (err) {
       console.error(err);
