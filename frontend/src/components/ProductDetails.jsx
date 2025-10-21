@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useProductContext } from "../hooks/useProductContext";
 import { motion } from "framer-motion";
 import { Battery, Smartphone, Monitor } from "lucide-react";
+import Chatbot from "./Chatbot";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -87,6 +88,7 @@ export default function ProductDetail() {
         </div>
       </div>
     </motion.div>
+    <Chatbot/>
   </motion.div>
   //   <motion.div 
   //   initial={{ opacity: 0 }} 
