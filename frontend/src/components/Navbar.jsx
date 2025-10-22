@@ -52,7 +52,7 @@ const Navbar = () => {
 
     return (
     <nav className="bg-blue-500 text-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 className="text-white font-bold text-xl pRPhones">RefurbStore</h1>
+        <h1 className="text-white font-bold text-xl pRPhones">ReStore</h1>
         <div className="flex items-center space-x-4">
           <Link to='/address' className="text-white font-medium">{user._doc.name}</Link>
           <Link to='/cart'><ShoppingCart className="mr-2" size={18} /></Link>
