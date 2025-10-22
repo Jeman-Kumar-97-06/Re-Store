@@ -8,5 +8,16 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeman-Kumar-97-06/Re-Store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jeman-Kumar-97-06/Re-Store/issues"
+  },
+  "homepage": "https://github.com/Jeman-Kumar-97-06/Re-Store#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
