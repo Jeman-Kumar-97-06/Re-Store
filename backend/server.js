@@ -79,6 +79,9 @@ app.use('/api/users',uRts);
 app.use('/api/carts',cRts);
 app.use('/api/products',pRts);
 
+//What to do in production:
+
+
 //connect to mongoose database server
 mongoose.connect(process.env.MONGOURL).then(()=>{
   app.listen(process.env.PORT,()=>{console.log("Connected to database and listening to request at ",process.env.PORT)})
