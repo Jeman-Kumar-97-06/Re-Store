@@ -8,14 +8,14 @@
 
 @font-face {
   font-family: Tech;
-  src: url('./assets/fonts/TECHFONT.TTF');
+  src: url('./assets/fonts/rans____.ttf');
 }
 
 .pRPhones{
   font-family: "Tech", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 30px;
+  font-size: 50px;
 }
 
 body {
