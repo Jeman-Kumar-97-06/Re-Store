@@ -19,7 +19,7 @@ export default function LandingPage() {
   const {products,dispatch} = useProductContext(); 
 
   const fetchAllPhones = async () => {
-    const resp = await fetch('http://localhost:4000/api/products',)
+    const resp = await fetch('/api/products',)
     const json = await resp.json();
     if (resp.ok) {
       dispatch({type:"SET_PRODS",payload:json});

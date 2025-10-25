@@ -21,12 +21,12 @@ export default function Chatbot() {
     setInput("");
 
     try {
-      const transport  = new StreamableHTTPClientTransport({url:"http://localhost:4000/mcp"});
+      const transport  = new StreamableHTTPClientTransport({url:"/mcp"});
       const cclient    = new Client(transport);
       const userPrompt = input
       const completion = await cerebclient.chat.completions.create({
         messages:[
-          {role:'system',content:'You are connected to a MCP server with a resource called "phones" take the list of all phones and answer the question asked.'},
+          {role:'system',content:'You are connected to a MCP server with a resource called "phones".This resource informs you about the stock of phones available in a store. Take the list of all phones and answer the question asked.'},
           {role:"user",content:userPrompt}
         ],
         model:"llama-4-scout-17b-16e-instruct"

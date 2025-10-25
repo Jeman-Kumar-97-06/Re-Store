@@ -22,7 +22,7 @@ export default function HomePage() {
 
   //Definition of the function that fetches all products : 
   const fetchAllPhones = async () => {
-    const resp = await fetch('http://localhost:4000/api/products',)
+    const resp = await fetch('/api/products',)
     const json = await resp.json();
     if (resp.ok) {
       dispatch({type:"SET_PRODS",payload:json});

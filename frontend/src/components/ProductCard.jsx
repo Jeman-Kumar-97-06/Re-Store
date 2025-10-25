@@ -17,7 +17,7 @@ const ProductCard = ({phone,index}) => {
     const prods = {  };
     prods[ph.name] = quantity;
     console.log(prods);
-    const resp  = await fetch('http://localhost:4000/api/carts',{
+    const resp  = await fetch('/api/carts',{
         method:"POST",
         headers : {'Content-Type':'application/json','Authorization':`Bearer ${user.token}`},
         body:JSON.stringify({prods})
