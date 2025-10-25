@@ -21,6 +21,7 @@ export default function LandingPage() {
   const fetchAllPhones = async () => {
     const resp = await fetch('/api/products',)
     const json = await resp.json();
+    console.log(json)
     if (resp.ok) {
       dispatch({type:"SET_PRODS",payload:json});
     }
