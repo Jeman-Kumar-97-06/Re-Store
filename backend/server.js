@@ -7,6 +7,7 @@ const cors       = require('cors');
 const express    = require('express');
 const mongoose   = require('mongoose');
 const app        = express();
+const path       = require('path');
 
 const uRts       = require('./routes/users');
 const cRts       = require('./routes/carts');
@@ -80,7 +81,13 @@ app.use('/api/carts',cRts);
 app.use('/api/products',pRts);
 
 //What to do in production:
-
+if (process.env.NODE_ENV==='production') {
+  const clientPath = path.join(__dirname,'../frontend/dist');
+  app.use(express.static(clientPath));
+  app.get('/',(req,res)=>{
+    res.sendFile(path.join(clientPath,'index.html'));
+  })
+}
 
 //connect to mongoose database server
 mongoose.connect(process.env.MONGOURL).then(()=>{
