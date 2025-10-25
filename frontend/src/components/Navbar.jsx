@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useThemeContext } from "../hooks/useThemeContext";
 
-const api = import.meta.env.VITE_LOC_API;
+const api = "926e21302b1f43dda1db35f1c5f3712e";
 const Navbar = () => {   
     const {user}   = useAuthContext();
     const {logout} = useLogout();
